@@ -7,7 +7,7 @@ Grau Informàtica
 NIF i Nombre completo autor2.
 --------------------------------------------------------------- */
 
-//Part concurrent a la funcio de calcular, distrubuir costos.
+//Part concurrent a la funcio de calcular, distrubuir costos  DFSDFSDFSD.
 
 #include <stdlib.h>
 #include <stdio.h>
