@@ -259,11 +259,11 @@ bool CalcularCercaOptima(PtrListaArboles Optimo, int argc,char *argv[])
 	TVectorCoordenadas CoordArboles, CercaArboles;
 	float MaderaArbolesTalados;
 
-    if (argc>2)
+    if (argc>2){
 		Threads = atoi(argv[2]);
-	else
+	}else{
 		Threads = DDefaultTheads;
-
+	}
     Tids = malloc (sizeof(pthread_t)*Threads);
 	if (Tids==NULL)  {
 		perror("Error reserva memoria tids."); 
