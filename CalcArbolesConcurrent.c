@@ -250,7 +250,7 @@ bool CalcularCercaOptima(PtrListaArboles Optimo, int argc,char *argv[])
 	TListaArboles CombinacionArboles;
 	TVectorCoordenadas CoordArboles, CercaArboles;
 	float MaderaArbolesTalados;
-
+	//Si le pasamos el numero de Hilos por parametro actualizamos la variable.
     if (argc>2){
 		Threads = atoi(argv[2]);
 	}else{
@@ -282,6 +282,7 @@ bool CalcularCercaOptima(PtrListaArboles Optimo, int argc,char *argv[])
 	Optimo->NumArboles = 0;
 	Optimo->Coste = DMaximoCoste;
 
+	//Asignamos los valores que ha de analizar cada hilo, lo creamos y le pasamos los parametros y funcion a analizar.
     for(int i=0;i<Threads;i++){
         Parametros[i].optimo = Optimo;
         if(i<(Threads-1)){
@@ -401,34 +402,36 @@ void OrdenarArboles()
 
 
 
-// Calcula la combinacin ptima entre el rango de combinaciones PrimeraCombinacion-UltimaCombinacion.
+// Calcula la combinacion optima entre el rango de combinaciones PrimeraCombinacion-UltimaCombinacion.
 
 int* CalcularCombinacionOptima(EstParam Parametros)
 {
     PtrListaArboles Optimo;
 	int Combinacion, MejorCombinacion=0, CosteMejorCombinacion,UltimaCombinacion,PrimeraCombinacion;
 	int Coste;
-
+	//Asignamos las variables de la clase a la estructura que le pasamos por parametro al hilo
     UltimaCombinacion = Parametros -> ultimaComb;
     PrimeraCombinacion = Parametros -> primeraComb;
     Optimo = Parametros -> optimo;
-
+	//Iteramos por las combinaciones 
 	CosteMejorCombinacion = Optimo->Coste;
 	for (Combinacion=PrimeraCombinacion; Combinacion<=UltimaCombinacion; Combinacion++)
 	{
+		//Evaluamos el coste y en caso de que sea el mejor actualizamos el mismo
 		Coste = EvaluarCombinacionListaArboles(Combinacion);
 		if ( Coste < CosteMejorCombinacion )
 		{
 			CosteMejorCombinacion = Coste;
 			MejorCombinacion = Combinacion;
 		}
-		if ((Combinacion%S)==0) //S?
+		if ((Combinacion%S)==0) 
 		{
 			ConvertirCombinacionToArbolesTalados(MejorCombinacion, &OptimoParcial);
 			printf("\r[%d] OptimoParcial %d-> Coste %d, %d Arboles talados:", Combinacion, MejorCombinacion, CosteMejorCombinacion, OptimoParcial.NumArboles);
 			MostrarArboles(OptimoParcial);
 		}			
 	}
+	//Devolvemos la mejor combinacion
 	int *mejorcombM = malloc(sizeof(int));
 	*mejorcombM = MejorCombinacion;
 	pthread_exit(mejorcombM);
